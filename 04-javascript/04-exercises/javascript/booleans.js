@@ -14,6 +14,11 @@
  * console.log( not(true) ); -> "false"
  * console.log( not(false) ); -> "true"
  */
+ function not(boolean1) {
+ 	return !boolean1;
+ }
+ console.log( not(true));
+ console.log( not(false));
 
 
 /*
@@ -28,7 +33,14 @@ function andTable(boolean1, boolean2) {
 	if (boolean1 == true && boolean2 == true) {
 		console.log("true && true : true");
 	}
-	// fill in the rest with additional else if statements
+	else if (boolean1 == true && boolean2 == false) {
+		console.log("true && false : false");
+	}
+	else if (boolean1 == false && boolean2 == true) {
+		console.log("false && true : false");
+	}
+	else
+		console.log("false && false : false");
 }
 
 andTable(true, true);
@@ -50,8 +62,15 @@ function orTable(boolean1, boolean2) {
 	if (boolean1 == true && boolean2 == true) {
 		console.log("true || true : true");
 	}
-	// fill in the rest with additional else if statements
-	// be careful, still using an && for the test!
+	else if (boolean1 == false && boolean2 == false) {
+		console.log("false || false : false");
+	}
+	else if (boolean1 == true && boolean2 == false) {
+		console.log("true || false : true");
+	}
+	else {
+		console.log("false || true : true");
+	}
 }
 
 orTable(true, true);
@@ -70,10 +89,10 @@ orTable(false, false);
  * strings, numbers and booleans
  */
 
-var x;
-var y;
-var z;
-var q;
+var x = false;
+var y = true;
+var z = 50;
+var q = "ok coders";
 
 
 if (!x) {
