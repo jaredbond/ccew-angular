@@ -15,7 +15,10 @@
  * print out the result of calling the function, for example:
  * console.log( hugeNumber() ) -> 18446744073709552000
  */
-
+ function hugeNumber() {
+ 	return Math.pow(2, 64);
+ }
+ console.log(hugeNumber());
 
 
 
@@ -35,6 +38,17 @@
  * testIt(0); -> "0 is zero"
  * testIt(100); -> "100 is postive"
  */
+ function testIt(x) {
+ 	if (x < 0)
+ 		console.log(x + " is negative");
+ 	else if (x == 0)
+ 		console.log(x + " is zero");
+ 	else if (x > 0)
+ 		console.log(x + " is positive");
+ }
+
+ var x = -50;
+ testIt(x);
 
 
 
@@ -51,7 +65,14 @@
  * console.log( addSuffix("Philip Dow", true) ); -> "Mr. Philip Dow"
  * console.log( addSuffix("Mary Beth Havard", false) ); -> "Mrs. Mary Beth Havard"
  */
-
+ function addSuffix(name, male) {
+ 	if (male)
+ 		return "Mr. " + name;
+ 	else
+ 		return "Mrs. " + name;
+ }
+ console.log( addSuffix("Philip Dow", true) ); 
+ console.log( addSuffix("Mary Beth Havard", false) );
 
 
 
@@ -87,8 +108,8 @@ function bar(x) {
 
 /* uncomment the next three lines one at a time and run the program */
 
-// foo(12);
-// foo(15);
-// bar(12);
+foo(12);
+foo(15);
+// bar(12); goes on infinitely because bar checks odds and foo evens, not vice versa
 
 
