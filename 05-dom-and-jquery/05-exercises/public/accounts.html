@@ -15,11 +15,20 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      .greenspan {
+        color: #00FF00;
+      }
+
+      .redspan {
+        color: #FF0000;
+      }
+    </style>
   </head>
   <body>
     <h1>Accounts</h1>
 
-    <!-- ******* insert html here ******* -->
+    <div id="accounts" class="container"></div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -28,11 +37,25 @@
 
     <script type="text/javascript" src="js/accounts.js"></script>
 
-    <!-- ******* insert javascript here ******* -->
-
     <script type="text/javascript">
       
-      // use accounts array
+      $(function() {
+        $.each(accounts, function(i, obj) {
+          $('#accounts').append($('<p class="lead">').text(obj.name));
+          if(obj.type === 0)
+            $('#accounts').append($('<p>').text("Checking Account"));
+          else
+            $('#accounts').append($('<p>').text("Savings Account"));
+          if(obj.balance > 0)
+          {
+            $('#accounts').append($('<p>').text("$" + obj.balance).css("color", "green"));          
+          }
+          else
+          {
+            $('#accounts').append($('<p>').text("$" + obj.balance).css("color", "red"));
+          }
+        });
+      });
 
     </script>
 
