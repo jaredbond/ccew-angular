@@ -16,10 +16,19 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
-    <h1>People</h1>
+    <div class="container">
+      <h1>People</h1>
 
-    <!-- ******* insert html here ******* -->
+      <div class="row">
+        <div class="col-md-4">
+          <ul class="list-group">
+          </ul>
+        </div>
+        <div class="col-md-8">
+        </div>
+      </div>
+
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -32,7 +41,29 @@
 
     <script type="text/javascript">
       
-      // use people array
+      $(function() {
+        $.each(people, function(i, person) {
+          $('.list-group').append( $('<li class="list-group-item">').text(person.firstName + " " + person.lastName) );
+        });
+
+        $("li").on("click", function() {
+          $(".col-md-8").empty();
+          var $li = $(this); 
+          var index = 0;
+          $.each(people, function(i, person) {
+            if ((person.firstName + " " + person.lastName) === $li.text())
+            {
+              index = i;
+            }
+          });       
+          $(".col-md-8").append( $("<p id='displayParagraph'>").html(people[index].firstName + " " + people[index].lastName + 
+                                               "<br>Age: " + people[index].age + 
+                                               "<br>Sex: " + people[index].sex + 
+                                               "<br>Eyes: " + people[index].eyes + 
+                                               "<br>Hair: " + people[index].hair + 
+                                               "<br>Music: " + people[index].music) );
+        });
+      });
 
     </script>
 
