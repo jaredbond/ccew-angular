@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,13 +16,36 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style type="text/css">
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
+    </style>
+
   </head>
-  <body>
+  <body ng-init="persons=[ {'name':'Philip Dow', 'admin':true}, {'name':'Melinda Gates', 'admin':true}, {'name':'Marcus Aurelius', 'admin':true}, {'name':'Mr. T.',   'admin':false}, {'name':'Gandalf', 'admin':true} ];">
 
     <div class="container">
       <h1>Accounts</h1>
 
-      <!-- YOUR CODE HERE -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Admin</td>
+          </tr>
+        </thead>
+        <tbody ng-cloak>
+          <tr ng-repeat="person in persons">
+            <td>{{ person.name }}</td>
+            <td>
+              <label>
+                <input type="checkbox" ng-checked="person.admin"></input>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
 
