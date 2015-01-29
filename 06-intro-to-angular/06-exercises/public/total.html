@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,14 +16,28 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style type="text/css">
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
+    </style>
+
   </head>
   <body>
 
     <div class="container">
       <h1>Total</h1>
-
-      <!-- YOUR CODE HERE -->
-
+      <form>
+        <div class="form-group">
+          <label class="control-label">Enter Amount: </label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="number" class="form-control" ng-model="amount">
+          </div>
+        </div>
+      </form>
+      <h5>After Tax</h5>
+      <p ng-cloak>Your total is: ${{ (amount * 1.073) | number:2 }}</p>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
