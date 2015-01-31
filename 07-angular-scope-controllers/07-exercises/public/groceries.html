@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="groceryApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,12 +17,34 @@
     <![endif]-->
 
   </head>
-  <body>
+  <body ng-controller="groceryController">
 
     <div class="container">
       <h1>Grocery List</h1>
 
-      <!-- YOUR CODE HERE -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <form class="form-horizontal" ng-submit="submit(item1, item2, item3)">
+              <div class="form-group">
+                <input ng-model="item1" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <input ng-model="item2" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <input ng-model="item3" type="text" class="form-control">
+              </div>
+              <input type="submit" value = "Submit">
+            </form>
+          </div>
+          <div class="col-md-6">
+            <p ng-bind="item1"></p>
+            <p ng-bind="item2"></p>
+            <p ng-bind="item3"></p>
+          </div>
+        </div>
+      </div>
 
     </div>
 
@@ -35,11 +57,20 @@
     <!-- Angular -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
 
-    <!-- YOUR JAVASCRIPT HERE -->
-
     <script type="text/javascript">
 
+      angular.module("groceryApp", []);
+
+      angular.module("groceryApp").controller("groceryController", function($scope) {
+        $scope.item1 = "Pizza";
+        $scope.item2 = "Cereal";
+        $scope.item3 = "Bread";
+        $scope.submit = function(first, second, third) {
+          var items = [first, second, third];
+          console.log(items);
+        };
+      });
+
     </script>
-    
   </body>
 </html>
