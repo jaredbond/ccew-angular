@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="totalApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,14 +16,29 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style type="text/css">
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
+    </style>
+
   </head>
-  <body>
+  <body ng-controller="bodyController">
 
     <div class="container">
       <h1>Total</h1>
-
-      <!-- YOUR CODE HERE -->
-
+      <form ng-submit="submit()">
+        <div class="form-group">
+          <label class="control-label">Enter Amount: </label>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="number" class="form-control" ng-model="amount">
+          </div>
+        </div>
+        <input type="submit" value="Submit">
+        <h5>After Tax</h5>
+        <p ng-cloak>Your total with 7.3% tax is: ${{total | number:2}}</p>
+      </form>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -35,11 +50,17 @@
     <!-- Angular -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
 
-    <!-- YOUR JAVASCRIPT HERE -->
-
     <script type="text/javascript">
 
+      angular.module("totalApp", []);
+
+      angular.module("totalApp").controller("bodyController", function($scope) {
+        $scope.amount = 99;
+        $scope.submit = function() {
+          $scope.total = $scope.amount * 1.073;
+        };
+      });
+
     </script>
-    
   </body>
 </html>
