@@ -28,15 +28,6 @@
     <div class="container">
       <h1>Sort Accounts</h1>
 
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary active">
-          <input type="radio" name="options" checked> Sort by Name
-        </label>
-        <label class="btn btn-primary">
-          <input type="radio" name="options"> Sort by Admin Status
-        </label>
-      </div>
-
       <table class="table table-striped">
         <thead>
           <tr>
@@ -45,16 +36,38 @@
           </tr>
         </thead>
         <tbody ng-cloak>
-          <tr ng-repeat="person in persons | orderBy:'name'">
+          <tr ng-repeat="person in persons | orderBy:criteria:descending">
             <td>{{ person.name }}</td>
             <td>
               <label>
-                <input type="checkbox" ng-checked="person.admin"></input>
+                <input type="checkbox" ng-model="person.admin"></input>
               </label>
             </td>
           </tr>
         </tbody>
       </table>
+
+      <form>
+        <label>Sort By:</label>
+        <div class="radio">
+          <label>
+            <input type="radio" ng-model="criteria" id="name" value="name">Name
+          </label>
+          <label>
+            <input type="radio" ng-model="criteria" id="admin" value="admin">Admin Status
+          </label>
+        </div>
+
+        <label>Sort Order:</label>
+        <div class="radio">
+          <label>
+            <input type="radio" ng-model="descending" id="asc" ng-value="false">Ascending
+          </label>
+          <label>
+            <input type="radio" ng-model="descending" id="desc" value="true">Descending
+          </label>
+        </div>
+      </form>
 
     </div>
 

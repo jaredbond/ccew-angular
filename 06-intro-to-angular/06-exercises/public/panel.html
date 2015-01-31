@@ -27,7 +27,7 @@
 
     <div class="container">
       <h1>Panel</h1>
-      <input class="btn btn-default" type="submit" value="Show Panel" ng-click="hideBool = false;">
+      <input class="btn btn-default" type="submit" value="Show Panel" ng-click="hideBool = !hideBool">
 
       <div class="panel panel-default" ng-hide="hideBool" ng-cloak>
         <div class="panel-heading">
