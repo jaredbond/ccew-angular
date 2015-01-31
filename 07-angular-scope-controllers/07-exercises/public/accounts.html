@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="accountsApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,13 +16,58 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style type="text/css">
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
+    </style>
+
   </head>
-  <body>
+  <body ng-controller="bodyController">
 
     <div class="container">
       <h1>Accounts</h1>
 
-      <!-- YOUR HTML HERE -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Admin</td>
+          </tr>
+        </thead>
+        <tbody ng-cloak>
+          <tr ng-repeat="person in persons | orderBy:criteria:descending">
+            <td>{{ person.name }}</td>
+            <td>
+              <label>
+                <input type="checkbox" ng-model="person.admin"></input>
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <form>
+        <label>Sort By:</label>
+        <div class="radio">
+          <label>
+            <input type="radio" ng-model="criteria" id="name" value="name">Name
+          </label>
+          <label>
+            <input type="radio" ng-model="criteria" id="admin" value="admin">Admin Status
+          </label>
+        </div>
+
+        <label>Sort Order:</label>
+        <div class="radio">
+          <label>
+            <input type="radio" ng-model="descending" id="asc" ng-value="false">Ascending
+          </label>
+          <label>
+            <input type="radio" ng-model="descending" id="desc" value="true">Descending
+          </label>
+        </div>
+      </form>
 
     </div>
 
@@ -35,11 +80,14 @@
     <!-- Angular -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
 
-    <!-- YOUR JAVASCRIPT HERE -->
-
     <script type="text/javascript">
 
+      angular.module("accountsApp", []);
+
+      angular.module("accountsApp").controller("bodyController", function($scope) {
+        $scope.persons = [ {'name':'Philip Dow', 'admin':true}, {'name':'Melinda Gates', 'admin':true}, {'name':'Marcus Aurelius', 'admin':true}, {'name':'Mr. T.', 'admin':false}, {'name':'Gandalf', 'admin':true} ];
+      });
+
     </script>
-    
   </body>
 </html>
