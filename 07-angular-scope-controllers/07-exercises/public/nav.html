@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="navApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,14 +16,78 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style type="text/css">
+      body { 
+        padding-top: 70px; 
+        padding-bottom: 70px;
+      }
+
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
+
+      .list-group-item-default {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #ddd;
+      }
+    </style>
+
   </head>
   <body>
+
+    <div ng-controller="navbarController" ng-cloak>
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <ul class="nav navbar-nav navbar-right">
+              <li ng-click="onClick(navLink)"  ng-repeat="navLink in navLinks" class="{{navLink.bool ? 'active' : '' }}"><a href={{navLink.link}}>{{navLink.title}}</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
       <h1>Nav</h1>
 
       <!-- YOUR CODE HERE -->
 
+      <div class="row"  ng-controller="listGroupController">
+        <div class="col-md-3">
+          <div>
+            <ul class="list-group">
+              <li ng-click="onClick(listItem)" ng-repeat="listItem in listItems" class="list-group-item {{listItem.bool ? 'list-group-item-info' : 'list-group-item-default' }}">
+                {{ listItem.name }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div ng-controller="detailController">
+            <p>{{ listItemName }}</p>
+          </div>
+        </div>
+      </div> <!-- end of grid layout-->
+
+    </div><!-- end of container -->
+
+    <div ng-controller="footerController">
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+          <div class="navbar-footer">
+            <ul class="nav navbar-nav navbar-left">
+              <li class="navbar-text">{{copyright}}</li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="navbar-text">{{email}}</li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -38,7 +102,48 @@
     <!-- YOUR JAVASCRIPT HERE -->
 
     <script type="text/javascript">
+      angular.module("navApp", []);
 
+      angular.module("navApp").controller("navbarController", function($scope) {
+        $scope.navLinks = [ {title: "Home", link: "/Users/CCEW/Desktop/Jared/ccew-angular/07-angular-scope-controllers/07-exercises/public/nav.html",
+                             bool: true}, 
+                            {title: "About", link: "/Users/CCEW/Desktop/Jared/ccew-angular/07-angular-scope-controllers/07-exercises/public/nav.html",
+                             bool: false}, 
+                            {title: "Signup", link: "/Users/CCEW/Desktop/Jared/ccew-angular/07-angular-scope-controllers/07-exercises/public/nav.html", 
+                             bool: false}, 
+                            {title: "Reports", link: "/Users/CCEW/Desktop/Jared/ccew-angular/07-angular-scope-controllers/07-exercises/public/nav.html", 
+                             bool: false}];
+        $scope.onClick = function(navLink) {
+          for (var i = 0; i < $scope.navLinks.length; i++)
+            $scope.navLinks[i].bool = false;
+          navLink.bool = true;
+        };
+      });
+
+      angular.module("navApp").controller("listGroupController", function($scope) {
+        $scope.listItems = [ {name: "Jared", bool: false}, {name: "Michael", bool: false}, {name: "Sean", bool: false}, {name: "Miles", bool: false},
+                             {name: "Jack", bool: false} ];
+        $scope.onClick = function(listItem) {
+          for(var i = 0; i < $scope.listItems.length; i++)
+            $scope.listItems[i].bool = false;
+          listItem.bool = true;
+        };
+      });
+
+      angular.module("navApp").controller("detailController", function($scope) {
+        for(var i = 0; i < $scope.listItems.length; i++)
+        {
+          if($scope.listItems[i].bool)
+          {
+            $scope.listItemName = $scope.listItems[i].name;
+          }
+        }
+      });
+
+      angular.module("navApp").controller("footerController", function($scope) {
+        $scope.copyright = "This page copyrighted by Jared Bond. Any unauthorized reproduction of this page is prohibited.";
+        $scope.email = "Have questions? Contact us at myemailaddress@gmail.com";
+      });
     </script>
     
   </body>
