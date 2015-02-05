@@ -1,1 +1,84 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="en" ng-app="parallelNav">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Parallel-Nav</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+      body { 
+        padding-top: 70px; 
+        padding-bottom: 70px;
+      }
+
+      [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: none !important;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div ng-controller="navController" ng-cloak>
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <ul class="nav navbar-nav">
+              <li ng-click="click('Home')"><a href="">Home</a></li>
+              <li ng-click="click('About')"><a href="">About</a></li>
+              <li ng-click="click('Marketing')"><a href="">Marketing</a></li>
+              <li ng-click="click('Sign-In')"><a href="">Sign-In</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div ng-controller="contentController">
+        <p>{{text}}</p>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <!-- Angular -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
+
+    <!-- YOUR JAVASCRIPT HERE -->
+
+    <script type="text/javascript">
+      angular.module("parallelNav", []);
+
+      angular.module("parallelNav").controller("navController", 
+        ["$scope", "$rootScope", function($scope, $rootScope) {
+          $scope.click = function(navLink) {
+            $rootScope.$broadcast("nav:click", navLink);
+          };
+        }]);
+
+      angular.module("parallelNav").controller("contentController",
+        ["$scope", function($scope) {
+          $scope.$on("nav:click", function(event, msg) {
+            $scope.text = msg;
+          });
+        }]);
+    </script>
+    
+  </body>
+</html>
