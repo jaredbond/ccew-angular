@@ -93,31 +93,10 @@
 
       angular.module('myApp', []);
 
-      angular.module('myApp').service('serverService',
-        ['$http', '$rootScope', function($http, $rootScope) {
-          this.getPosts = function () {
-            return $http.get('/api/v1/posts');
-          };
-
-          this.getPost = function(postId) {
-            return $http.get( ['/api/v1/posts',postId].join('/') );
-          };
-
-          this.createPost = function(data) {
-            return $http.post('/api/v1/posts', data);
-          };
-
-          this.updatePost = function(postId, data) {
-            return $http.put( ['/api/v1/posts',postId].join('/'), data );
-          };
-
-          this.deletePost = function(postId) {
-            return $http.delete( ['/api/v1/posts',postId].join('/') );
-          };
-        }]);
+      
 
       angular.module('myApp').controller('newController', 
-        ['$scope', '$rootScope', 'serverService', function($scope, $rootScope, serverService) {
+        ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
 
         $scope.post = {};
         $scope.formVisible = false;
@@ -127,7 +106,7 @@
         };
 
         $scope.createPost = function(post) {
-          serverService.createPost(post).then(
+          $http.post('/api/v1/posts', post).then(
             function(response) {
               $rootScope.$broadcast('post:created');
             }, 
@@ -139,12 +118,12 @@
       }]);
 
       angular.module('myApp').controller('editController', 
-        ['$scope', '$rootScope', 'serverService', function($scope, $rootScope, serverService) {
+        ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
           $scope.formVisible = false;
 
           $scope.$on('post:editClicked', function(evt, postId) {
             $scope.formVisible = true;
-            serverService.getPost(postId).then(
+            $http.get( ['/api/v1/posts',postId].join('/') ).then(
               function(response) {
                 $scope.post = response.data;
               },
@@ -155,19 +134,19 @@
 
           $scope.submitPost = function(post) {
             var postId = post._id;
-            serverService.updatePost(postId, post).then(
-              function(response) {
-                $rootScope.$broadcast('post:updated');
-              }, 
-              function(error) {
-                console.log(error);
-              });
+            $http.put( ['/api/v1/posts',postId].join('/'), post ).then(
+            function(response) {
+              $rootScope.$broadcast('post:updated');
+            }, 
+            function(error) {
+              console.log(error);
+            });
             $scope.formVisible = false;
           };
       }]);
 
       angular.module('myApp').controller('listController', 
-        ['$scope', '$rootScope', 'serverService', function($scope, $rootScope, serverService) {
+        ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
 
         $scope.$on('post:created', function(evt) {
           $scope.refresh();
@@ -177,12 +156,8 @@
           $scope.refresh();
         });
 
-        $scope.$on('post:deleted', function(evt) {
-          $scope.refresh();
-        });
-
         $scope.refresh = function() {
-          $scope.posts = serverService.getPosts().then(
+          $http.get('/api/v1/posts').then(
             function(response) {
               $scope.posts = response.data;
             },
@@ -197,9 +172,9 @@
 
         $scope.deletePost = function(post) {
           var postId = post._id;
-          serverService.deletePost(postId).then(
+          $http.delete( ['/api/v1/posts',postId].join('/') ).then(
             function(response) {
-              $rootScope.$broadcast('post:deleted');
+              $scope.refresh();
             },
             function(error){
               console.log(error);
@@ -215,16 +190,16 @@
       }]);
 
       angular.module('myApp').controller('itemController', 
-        ['$scope', 'serverService', function($scope, serverService) {
+        ['$scope', '$http', function($scope, $http) {
         
         $scope.$on('post:selected', function(evt, postId) {
-          serverService.getPost(postId).then(
-              function(response) {
-                $scope.post = response.data;
-              },
-              function(error) {
-                console.log(error);
-              });
+          $http.get( ['/api/v1/posts',postId].join('/') ).then(
+            function(response) {
+              $scope.post = response.data;
+            },
+            function(error) {
+              console.log(error);
+            });
         });
 
       }]);

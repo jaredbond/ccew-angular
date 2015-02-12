@@ -84,10 +84,12 @@ router.get('/api/v1/posts/:id', function(req, res) {
 router.put('/api/v1/posts/:id', function(req, res) {
   var index = -1;
   for ( var i = 0; i < posts.length; i++ ) {
-    if (posts[i]._id == req.params.id); {
+    if (posts[i]._id == req.params.id) {
       index = i; break;
     }
+    console.log('Loop');
   }
+  console.log(index);
   if (index == -1) {
     res.status(404).json({err:404});
   } else {
